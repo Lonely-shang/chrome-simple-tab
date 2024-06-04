@@ -1,5 +1,5 @@
 {
-  "name": " chrome-simple-tab",
+  "name": "chrome-simple-tab",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,23 +9,42 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "commitlint": "commitlint --config commitlint.config.cjs -e -V",
+    "eslint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "lint-staged",
+    "format": "prettier --write src/",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**": [
+      "prettier"
+    ]
+  },
+  "commotlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "dependencies": {
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/chrome": "^0.0.268",
     "@types/node": "^20.12.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
+    "commitlint": "^19.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.5",
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
     "rollup-plugin-copy": "^3.5.0",

@@ -1,0 +1,35 @@
+{
+  "name": "SimpleTab",
+  "description": "A Extension for Google Chrome.",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "notifications",
+    "declarativeContent",
+    "scripting",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": ["*://*/*"],
+  "homepage_url": "",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_title": "SimpleTab",
+    "default_icon": "icon128.png",
+    "default_popup": "./popup/popup.html"
+  },
+  "icons": {
+    "16": "icon128.png",
+    "48": "icon128.png",
+    "128": "icon128.png"
+  },
+  "commands": {}
+}

@@ -1,6 +1,11 @@
 <script setup lang="ts">
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
+import FetchService from '@/plugins/FetchService'
+
+new FetchService()
+  .get('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+  .then((res) => {
+    console.log(res)
+  })
 </script>
 
 <template>

@@ -1,41 +1,74 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import './tab.scss'
 import logo from '@/assets/google_logo.svg'
-import FetchService from '@/plugins/FetchService'
+import {
+  getBingImg,
+  handlerNetWorkUrl,
+  handlerSearchEngines,
+  handlerSearchValueShowPreFix,
+  matchUrl
+} from '@/utils/utils'
 
-const url1 = ref<string>('')
+const imgUrl = ref<string>('')
 
-new FetchService().get('/bing/HPImageArchive.aspx?format=js&idx=0&n=1').then((res: any) => {
-  url1.value = `https://cn.bing.com/${res.images[0].url}`
-  console.log(res)
-})
-
+const showPreFix = ref<boolean>(false)
+const preFixContent = ref<string>('')
 const searchValue = ref<string>('')
 
-const handlerSearchValChange = (event: Event) => {
-  searchValue.value = (event as InputEvent).data || ''
-}
+imgUrl.value = await getBingImg()
+
+handlerSearchValueShowPreFix(searchValue, showPreFix, preFixContent)
 
 const handlerKeyDown = (event: KeyboardEvent) => {
-  console.log(event)
   if (event.key === 'Enter') {
-    window.open(`http://www.bing.com/search?q=${searchValue.value}`)
+    if (searchValue.value == '') return
+    if (matchUrl(searchValue.value)) {
+      const openUrl = handlerNetWorkUrl(searchValue.value)
+      window.open(openUrl)
+      return
+    }
+    if (showPreFix.value) {
+      const url = handlerSearchEngines(preFixContent.value, searchValue.value)
+      window.open(url)
+    }
+    window.open(`http://www.google.com/search?q=${searchValue.value}`)
+  }
+
+  if (searchValue.value === '' && event.key === 'Backspace') {
+    showPreFix.value = false
   }
 }
 
+const placeholderVal = computed(() =>
+  showPreFix.value ? '请输入搜索内容' : '在Google中搜索 或输入网址'
+)
+
+// const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
+// console.log(themeMedia)
+
+// themeMedia.addEventListener('change', (e) => {
+//   if (e.matches) {
+//     console.log('light')
+//   } else {
+//     console.log('dark')
+//   }
+// })
+
 const App = () => {
   return (
-    <div class="tabMain" style={{ 'background-image': `url(${url1.value})` }}>
+    <div class="tabMain" style={{ 'background-image': `url(${imgUrl.value})` }}>
       <div class="title">
         <img src={logo} alt="" srcset="" />
       </div>
       <div class="search">
+        <div v-show={showPreFix.value} class="prefix">
+          {preFixContent.value}
+        </div>
         <input
           type="text"
-          value={searchValue.value}
-          onInput={handlerSearchValChange}
+          v-model={searchValue.value}
           onKeydown={handlerKeyDown.bind(this)}
-          placeholder="Google中搜索 或输入网址"
+          placeholder={placeholderVal.value}
         />
       </div>
     </div>

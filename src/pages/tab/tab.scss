@@ -1,0 +1,76 @@
+@import '@/fonts/index.scss';
+
+#app {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.tabMain {
+  padding-top: 20vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  .title {
+    font-size: 8rem;
+    font-weight: 500;
+    text-align: center;
+    user-select: none;
+    font-family: 'Sketch';
+    color: white;
+    img {
+      user-select: none;
+    }
+  }
+  .search {
+    width: 40%;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    border-radius: 4rem;
+    backdrop-filter: blur(6px);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    box-shadow: 0 2px 6px rgba(32, 33, 36, 0.6);
+    .prefix {
+      padding-top: 4px !important;
+      vertical-align: middle;
+      font-family: 'ShiWeiYongTuiHeiTi';
+      font-size: 1.6rem;
+      font-weight: 600;
+      user-select: none;
+      white-space: nowrap;
+      display: inline-block;
+      padding: 0 15px 0 20px;
+      background: var(--color-prefix);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border-right: 2px solid;
+      border-image-slice: 1;
+      border-image-source: var(--color-prefix-border);
+      // border-right: 1px solid var(--color-text);
+    }
+    input {
+      width: 100%;
+      height: 3.5rem;
+      border: none;
+      font-weight: 500;
+      font-size: 1.25rem;
+      padding: 0 1.4rem;
+      border-radius: 4rem;
+      color: var(--color-text);
+      background-color: transparent;
+      &:focus-visible {
+        outline: none;
+      }
+      &::placeholder {
+        user-select: none;
+        font-size: 1.25rem;
+        color: var(--color-placeholder);
+        // background: var(--color-prefix);
+        // -webkit-background-clip: text;
+        // -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}

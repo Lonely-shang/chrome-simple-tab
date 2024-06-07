@@ -1,10 +1,11 @@
 import { watch, type Ref } from 'vue'
 import { initData } from '@/config'
 import FetchService from '@/plugins/FetchService'
+import { getBingEnvUrl } from './env'
 
 export const getBingImg = (): Promise<string> => {
   return new FetchService()
-    .get('/bing/HPImageArchive.aspx?format=js&idx=0&n=1')
+    .get(`${getBingEnvUrl()}/HPImageArchive.aspx?format=js&idx=0&n=1`)
     .then((res: any) => {
       return `https://cn.bing.com/${res.images[0].url}`
     })

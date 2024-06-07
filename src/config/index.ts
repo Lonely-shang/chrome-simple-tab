@@ -11,7 +11,7 @@ const initData: NetWorkSearchItem[] = [
   },
   {
     keyword: 'baidu',
-    title: '百 度',
+    title: '百度搜索',
     url: 'http://www.baidu.com/s?wd={query}'
   },
   {
@@ -28,6 +28,26 @@ const initData: NetWorkSearchItem[] = [
     keyword: 'maps',
     title: 'Google Maps',
     url: 'http://maps.google.com/?q={query}'
+  },
+  {
+    keyword: 'map',
+    title: 'Baidu Map',
+    url: 'https://map.baidu.com/search?querytype=s&da_src=shareurl&wd={query}'
+  },
+  {
+    keyword: 'youtube',
+    title: 'Youtobe',
+    url: 'https://www.youtube.com/results?search_query={query}'
+  },
+  {
+    keyword: 'bilibili',
+    title: 'BiliBili',
+    url: 'https://search.bilibili.com/all?keyword={query}'
+  },
+  {
+    keyword: 'juejin',
+    title: '稀土掘金',
+    url: 'https://juejin.cn/search?query={query}'
   }
 ]
 

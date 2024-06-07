@@ -1,0 +1,51 @@
+.popupMain {
+  width: 300px;
+  padding-top: 1rem;
+  .switchBox {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1px 0px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--color-border);
+    div {
+      flex: 1;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      color: var(--color-text);
+      text-align: center;
+      padding: 8px 10px;
+    }
+    span {
+      flex: 1;
+      height: 100%;
+      width: 33.333%;
+      top: 0;
+      bottom: 0;
+      z-index: -1;
+      border-radius: 10px;
+      position: absolute;
+      display: inline-block;
+      transition: left 0.5s cubic-bezier(0.3, -1, 0.7, 2);
+      background-color: var(--color-button);
+    }
+    .active {
+      color: white;
+      font-weight: 700;
+      transition: all 0.4s;
+    }
+  }
+  .footer {
+    width: 300px;
+    margin-top: 1rem;
+    line-height: 35px;
+    color: var(--color-text);
+    background-color: var(--color-border-hover);
+    text-align: center;
+  }
+}

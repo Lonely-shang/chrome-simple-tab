@@ -48,6 +48,11 @@ const initData: NetWorkSearchItem[] = [
     keyword: 'juejin',
     title: '稀土掘金',
     url: 'https://juejin.cn/search?query={query}'
+  },
+  {
+    keyword: 'npm',
+    title: 'NPM',
+    url: 'https://www.npmjs.com/package/{query}'
   }
 ]
 

@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import './popup.scss'
 
@@ -10,11 +10,23 @@ enum Model {
 
 const leftSetp = ref<string>('66.6666%')
 const currentModel = ref<Model>(Model.Auto)
-
+// const port = chrome.runtime.connect({
+//   name: 'Sample Communication'
+// })
+// port.onMessage.addListener(function (msg: any) {
+//   console.log('message recieved' + msg)
+// })
 const changeModel = (model: Model) => {
-  console.log(model)
   currentModel.value = model
   leftSetp.value = model + '%'
+  chrome.storage.sync.set({
+    model: model
+  })
+
+  // port.postMessage('Hi BackGround')
+  // chrome.runtime.sendMessage({ b: 2, a: 1 }, (response) => {
+  //   alert(response)
+  // })
 }
 
 const currentActive = (model: Model) => (model == currentModel.value ? 'active' : '')

@@ -6,8 +6,15 @@
   "host_permissions": ["*://*/*"],
   "background": {
     "service_worker": "background/background.js",
+    "persisten": true,
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "js": ["content/content.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "chrome_url_overrides": {
     "newtab": "pages/tab/tab.html"
   },
@@ -16,6 +23,7 @@
     "default_icon": "icon/logo.svg",
     "default_popup": "pages/popup/popup.html"
   },
+  "permissions": ["storage", "notifications", "activeTab"],
   "icons": {
     "16": "icon/logo.svg",
     "48": "icon/logo.svg",

@@ -19,7 +19,17 @@ getBingImg().then((res) => (imgUrl.value = res))
 
 handlerSearchValueShowPreFix(searchValue, showPreFix, preFixContent)
 
+// const port = chrome.runtime.connect({
+//   name: 'Sample Communication'
+// })
+// port.onMessage.addListener(function (msg: any) {
+//   console.log('message recieved hdfkjasdjfklsdaj')
+// })
+
 const handlerKeyDown = (event: KeyboardEvent) => {
+  // chrome.storage.sync.get(['model'], (data) => {
+  //   console.log(data)
+  // })
   if (event.key === 'Enter') {
     searchValue.value = searchValue.value.trim()
     if (searchValue.value == '') return

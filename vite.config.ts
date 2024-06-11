@@ -16,7 +16,8 @@ export default defineConfig({
     copy({
       targets: [
         { src: 'public/manifest.json', dest: 'output' },
-        { src: 'src/assets/logo.svg', dest: 'output/icon' }
+        { src: 'src/assets/logo.svg', dest: 'output/icon' },
+        { src: 'public/favicon.ico', dest: 'output' }
       ],
       verbose: true
     })
@@ -38,7 +39,8 @@ export default defineConfig({
       input: {
         popup: path.resolve(__dirname, 'src/pages/popup/popup.html'),
         tab: path.resolve(__dirname, 'src/pages/tab/tab.html'),
-        background: path.resolve(__dirname, 'src/background/main.ts')
+        background: path.resolve(__dirname, 'src/background/main.ts'),
+        content: path.resolve(__dirname, 'src/content/content-script.ts')
       },
       output: {
         assetFileNames: '[name].[ext]',

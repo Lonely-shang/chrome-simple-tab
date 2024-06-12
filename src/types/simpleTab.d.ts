@@ -7,3 +7,7 @@ interface NetWorkSearchItem {
 interface NetWorkSearchObj {
   [key: string]: NetWorkSearchItem
 }
+
+interface ChromeStorageData {
+  exterior: number
+}

@@ -8,6 +8,7 @@ import {
   handlerSearchValueShowPreFix,
   matchUrl
 } from '@/utils/utils'
+import { changeTheme } from '@/utils/theme'
 
 const imgUrl = ref<string>('')
 
@@ -19,17 +20,17 @@ getBingImg().then((res) => (imgUrl.value = res))
 
 handlerSearchValueShowPreFix(searchValue, showPreFix, preFixContent)
 
-// const port = chrome.runtime.connect({
-//   name: 'Sample Communication'
-// })
-// port.onMessage.addListener(function (msg: any) {
-//   console.log('message recieved hdfkjasdjfklsdaj')
-// })
+const port = chrome.runtime.connect({
+  name: 'Tab'
+})
+
+changeTheme()
+port.onMessage.addListener(() => {
+  changeTheme()
+  console.log('1111111111111111111')
+})
 
 const handlerKeyDown = (event: KeyboardEvent) => {
-  // chrome.storage.sync.get(['model'], (data) => {
-  //   console.log(data)
-  // })
   if (event.key === 'Enter') {
     searchValue.value = searchValue.value.trim()
     if (searchValue.value == '') return
@@ -54,17 +55,6 @@ const handlerKeyDown = (event: KeyboardEvent) => {
 const placeholderVal = computed(() =>
   showPreFix.value ? '请输入搜索内容' : '在Google中搜索 或输入网址'
 )
-
-// const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-// console.log(themeMedia)
-
-// themeMedia.addEventListener('change', (e) => {
-//   if (e.matches) {
-//     console.log('light')
-//   } else {
-//     console.log('dark')
-//   }
-// })
 
 const App = () => {
   return (

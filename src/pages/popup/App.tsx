@@ -1,47 +1,41 @@
 import { ref } from 'vue'
 
 import './popup.scss'
+import { changeTheme, setModelTheme } from '@/utils/theme'
+import { Exterior } from '@/enum'
+import { getExteriorDisplacement, getExteriorForStorage } from '@/utils/enumUtils'
 
-enum Model {
-  White = 0,
-  Black = 100 / 3,
-  Auto = (100 / 3) * 2
-}
+const exterior = await getExteriorForStorage()
+const leftPosition: string = getExteriorDisplacement(exterior)
+const leftSetp = ref<string>(leftPosition)
+const currentModel = ref<Exterior>(exterior)
+const port = chrome.runtime.connect({
+  name: 'Popup'
+})
 
-const leftSetp = ref<string>('66.6666%')
-const currentModel = ref<Model>(Model.Auto)
-// const port = chrome.runtime.connect({
-//   name: 'Sample Communication'
-// })
-// port.onMessage.addListener(function (msg: any) {
-//   console.log('message recieved' + msg)
-// })
-const changeModel = (model: Model) => {
+changeTheme()
+
+const changeModel = (model: Exterior) => {
   currentModel.value = model
-  leftSetp.value = model + '%'
-  chrome.storage.sync.set({
-    model: model
-  })
-
-  // port.postMessage('Hi BackGround')
-  // chrome.runtime.sendMessage({ b: 2, a: 1 }, (response) => {
-  //   alert(response)
-  // })
+  leftSetp.value = getExteriorDisplacement(model)
+  setModelTheme(model)
+  port.postMessage('changeTheme')
+  changeTheme()
 }
 
-const currentActive = (model: Model) => (model == currentModel.value ? 'active' : '')
+const currentActive = (model: Exterior) => (model == currentModel.value ? 'active' : '')
 
 const App = () => {
   return (
     <div class="popupMain">
       <div class="switchBox">
-        <div class={currentActive(Model.White)} onClick={() => changeModel(Model.White)}>
+        <div class={currentActive(Exterior.Light)} onClick={() => changeModel(Exterior.Light)}>
           浅色
         </div>
-        <div class={currentActive(Model.Black)} onClick={() => changeModel(Model.Black)}>
+        <div class={currentActive(Exterior.Dark)} onClick={() => changeModel(Exterior.Dark)}>
           深色
         </div>
-        <div class={currentActive(Model.Auto)} onClick={() => changeModel(Model.Auto)}>
+        <div class={currentActive(Exterior.Auto)} onClick={() => changeModel(Exterior.Auto)}>
           自动
         </div>
         <span style={{ left: leftSetp.value }}></span>

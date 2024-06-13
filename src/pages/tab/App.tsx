@@ -1,6 +1,5 @@
 import { computed, ref } from 'vue'
 import './tab.scss'
-import logo from '@/assets/google_logo.svg'
 import {
   getBingImg,
   handlerNetWorkUrl,

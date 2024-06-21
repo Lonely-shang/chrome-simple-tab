@@ -3,7 +3,7 @@ import { initData } from '@/config'
 import FetchService from '@/plugins/FetchService'
 import { getBingEnvUrl } from './env'
 
-export const getBingImg = (): Promise<string> => {
+export const getBingImg = async (): Promise<string> => {
   return new FetchService()
     .get(`${getBingEnvUrl()}/HPImageArchive.aspx?format=js&idx=0&n=1`)
     .then((res: any) => {

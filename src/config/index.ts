@@ -53,6 +53,11 @@ const initData: NetWorkSearchItem[] = [
     keyword: 'npm',
     title: 'NPM',
     url: 'https://www.npmjs.com/package/{query}'
+  },
+  {
+    keyword: 'mdn',
+    title: 'MDN',
+    url: 'https://developer.mozilla.org/en-US/search?q={query}'
   }
 ]
 

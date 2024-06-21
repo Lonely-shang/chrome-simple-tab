@@ -18,7 +18,7 @@ export default defineConfig({
     copy({
       targets: [
         { src: 'public/manifest.json', dest: 'output' },
-        { src: 'src/assets/logo.svg', dest: 'output/icon' },
+        { src: 'src/assets/logo.png', dest: 'output/icon' },
         { src: 'public/favicon.ico', dest: 'output' }
       ],
       verbose: true

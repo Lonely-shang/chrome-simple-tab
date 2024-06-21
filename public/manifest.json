@@ -20,13 +20,13 @@
   },
   "action": {
     "default_title": "SimpleTab",
-    "default_icon": "icon/logo.svg",
+    "default_icon": "icon/logo.png",
     "default_popup": "pages/popup/popup.html"
   },
-  "permissions": ["storage", "notifications", "activeTab"],
+  "permissions": ["storage", "notifications", "activeTab", "history"],
   "icons": {
-    "16": "icon/logo.svg",
-    "48": "icon/logo.svg",
-    "128": "icon/logo.svg"
+    "16": "icon/logo.png",
+    "48": "icon/logo.png",
+    "128": "icon/logo.png"
   }
 }

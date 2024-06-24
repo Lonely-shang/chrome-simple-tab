@@ -1,4 +1,4 @@
-import { computed, defineComponent, onActivated, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, Transition } from 'vue'
 import './tab.scss'
 import {
   getBingImg,
@@ -12,6 +12,7 @@ import { changeTheme } from '@/utils/theme'
 export default defineComponent({
   name: 'App',
   setup() {
+    let index: number = 0
     const searchInput = ref<HTMLInputElement>()
     const imgUrl = ref<string>('')
 
@@ -25,10 +26,6 @@ export default defineComponent({
 
     handlerSearchValueShowPreFix(searchValue, showPreFix, preFixContent)
 
-    onMounted(() => {
-      searchInput.value?.focus()
-    })
-
     // chrome.history.search(
     //   {
     //     text: ''
@@ -37,16 +34,20 @@ export default defineComponent({
     //     console.log(results)
     //   }
     // )
-    const dateTime = new Date()
-    const port = chrome.runtime.connect({
-      name: `Tab${dateTime}`
-    })
+    // const dateTime = new Date()
+    // const port = chrome.runtime.connect({
+    //   name: `Tab${dateTime.getTime()}`
+    // })
 
-    port.onMessage.addListener(() => {
-      changeTheme()
-    })
+    // port.onMessage.addListener(() => {
+    //   changeTheme()
+    // })
 
     const handlerKeyDown = (event: KeyboardEvent) => {
+      if (event.key == 'Tab') {
+        event.preventDefault()
+      }
+
       if (event.key === 'Enter') {
         searchValue.value = searchValue.value.trim()
         if (searchValue.value == '') return
@@ -64,7 +65,16 @@ export default defineComponent({
       }
 
       if (searchValue.value === '' && event.key === 'Backspace') {
-        showPreFix.value = false
+        if (index === 1) {
+          index = 0
+          showPreFix.value = false
+        } else {
+          index = 1
+          const time = setTimeout(() => {
+            index = 0
+            clearTimeout(time)
+          }, 300)
+        }
       }
     }
 

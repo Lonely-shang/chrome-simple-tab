@@ -10,4 +10,5 @@ interface NetWorkSearchObj {
 
 interface ChromeStorageData {
   exterior: number
+  urlConfList?: NetWorkSearchItem[]
 }

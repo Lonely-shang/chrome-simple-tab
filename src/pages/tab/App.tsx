@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, ref, Transition } from 'vue'
+import { computed, defineComponent, ref, Transition } from 'vue'
 import './tab.scss'
 import {
   getBingImg,
@@ -8,11 +8,13 @@ import {
   matchUrl
 } from '@/utils/utils'
 import { changeTheme } from '@/utils/theme'
+import icon from '@/assets/icon.svg'
 
 export default defineComponent({
   name: 'App',
   setup() {
     let index: number = 0
+    const showIframe = ref<boolean>(false)
     const searchInput = ref<HTMLInputElement>()
     const imgUrl = ref<string>('')
 
@@ -26,6 +28,7 @@ export default defineComponent({
 
     handlerSearchValueShowPreFix(searchValue, showPreFix, preFixContent)
 
+    // TODO 历史记录
     // chrome.history.search(
     //   {
     //     text: ''
@@ -34,14 +37,15 @@ export default defineComponent({
     //     console.log(results)
     //   }
     // )
-    // const dateTime = new Date()
-    // const port = chrome.runtime.connect({
-    //   name: `Tab${dateTime.getTime()}`
-    // })
 
-    // port.onMessage.addListener(() => {
-    //   changeTheme()
-    // })
+    const dateTime = new Date()
+    const port = chrome.runtime.connect({
+      name: `Tab${dateTime.getTime()}`
+    })
+
+    port.onMessage.addListener(() => {
+      changeTheme()
+    })
 
     const handlerKeyDown = (event: KeyboardEvent) => {
       if (event.key == 'Tab') {
@@ -82,6 +86,16 @@ export default defineComponent({
       showPreFix.value ? '请输入搜索内容' : '在Google中搜索 或输入网址'
     )
 
+    function handlerShowIframe(): void {
+      showIframe.value = false
+    }
+
+    // document.addEventListener('keydown', (e: KeyboardEvent) => {
+    //   if (e.altKey && e.key === 'o') {
+    //     showIframe.value = !showIframe.value
+    //   }
+    // })
+
     return () => (
       <div class="tabMain" style={{ 'background-image': `url(${imgUrl.value})` }}>
         <div class="title">Simple</div>
@@ -97,6 +111,14 @@ export default defineComponent({
             placeholder={placeholderVal.value}
           />
         </div>
+        <Transition name="iframe">
+          <div class="tabMain-wrap" v-show={showIframe.value}>
+            <div class="tabMain-wrap-icon" onClick={() => handlerShowIframe()}>
+              <img src={icon} />
+            </div>
+            <iframe class="tabMain-wrap-iframe" src=""></iframe>
+          </div>
+        </Transition>
       </div>
     )
   }

@@ -3,6 +3,7 @@
 #app {
   height: 100vh;
   display: flex;
+  overflow: hidden;
   justify-content: center;
 }
 .tabMain {
@@ -74,18 +75,50 @@
     }
   }
 
-  .prefix-enter,
-  .prefix-leave-to {
-    width: 0px;
-    transform: translate(-100%);
+  &-wrap {
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    &-iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    &-icon {
+      z-index: 1000;
+      color: transparent;
+      position: absolute;
+      left: 50%;
+      user-select: none;
+      cursor: pointer;
+      height: 20px;
+      min-width: 50px;
+      text-align: center;
+      border-radius: 0 0 6px 6px;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.12),
+        0 0 6px rgba(0, 0, 0, 0.04);
+      background-color: rgba(255, 255, 255, 0.308);
+      img {
+        height: 14px;
+        margin-top: 2px;
+      }
+    }
   }
 
-  .prefix-enter-active,
-  .prefix-leave-active {
-    transition: 0.2s;
+  .iframe-enter-from,
+  .iframe-leave-to {
+    top: 100vh;
   }
 
-  .prefix-enter-to {
-    transform: translate(0);
+  .iframe-enter-active,
+  .iframe-leave-active {
+    transition: all 0.4s linear;
+  }
+
+  .iframe-leave-from,
+  .iframe-enter-to {
+    top: 0;
   }
 }

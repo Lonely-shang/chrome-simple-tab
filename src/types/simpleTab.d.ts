@@ -11,4 +11,8 @@ interface NetWorkSearchObj {
 interface ChromeStorageData {
   exterior: number
   urlConfList?: NetWorkSearchItem[]
+  customerWindow?: {
+    urlInputStr: string
+    isEnable: boolean
+  }
 }

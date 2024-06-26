@@ -78,11 +78,15 @@ h1 {
 }
 
 .customerWindow {
+  display: flex;
+  flex-wrap: wrap;
   padding-bottom: 10px;
   span {
     font-size: 14px;
     margin-left: 15px;
     user-select: none;
+    height: 32px;
+    line-height: 32px;
     display: inline-block;
   }
   input[type='text'] {
@@ -90,16 +94,23 @@ h1 {
     width: 70%;
     font-size: 16px;
     border-radius: 6px;
+    padding-left: 10px;
     border: 1px solid #409eff;
+    color: var(--color-text);
+    background-color: var(--color-background);
     &:focus-visible {
       outline: none;
+    }
+    &:disabled {
+      border: none;
+      background-color: transparent;
     }
   }
   .checkbox {
     height: 16px;
     width: 16px;
     float: right;
-    margin-top: 3px;
+    margin-top: 8px;
     cursor: pointer;
     border: 1px solid #2b95ff;
   }
@@ -119,7 +130,7 @@ h1 {
       display: flex;
       padding: 10px 0;
       margin: 0 15px;
-      border-bottom: 1px solid #f2f1f6;
+      border-bottom: 1px solid #f2f1f6da;
       .icon {
         width: 40px;
         height: 40px;

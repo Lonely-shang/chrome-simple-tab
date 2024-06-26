@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import './options.scss'
 import { changeTheme, setModelTheme } from '@/utils/theme'
 import { Exterior } from '@/enum'
@@ -7,19 +7,33 @@ import { initData } from '@/config'
 import lightImg from '@/assets/light.png'
 import darkImg from '@/assets/dark.png'
 import autoImg from '@/assets/auto.png'
+import { getCustomerConf } from '@/utils/utils'
 
-// const exterior = await getExteriorForStorage()
+const customerWindowConf = await getCustomerConf()
+const exterior = await getExteriorForStorage()
 
 export default defineComponent({
   name: 'App',
   setup() {
+    const urlInput = ref<string>(customerWindowConf.urlInputStr)
+    const enable = ref<boolean>(customerWindowConf.isEnable)
+
     const colorList: string[] = []
 
-    const active = ref<Exterior>(1)
+    const active = ref<Exterior>(exterior)
 
     changeTheme()
 
     const isActive = (model: Exterior) => (model == active.value ? 'active' : '')
+
+    watch([urlInput, enable], (newVal) => {
+      chrome.storage.sync.set({
+        customerWindow: {
+          urlInputStr: newVal[0],
+          isEnable: newVal[1]
+        }
+      })
+    })
 
     const dateTime = new Date()
     const port = chrome.runtime.connect({
@@ -65,10 +79,16 @@ export default defineComponent({
         <div class="optionsMain customerWindow">
           <div class="title">自定义窗口</div>
           <span>网络地址：</span>
-          <input type="text" spellcheck="false" />
+          <input
+            type="text"
+            disabled={!enable.value}
+            spellcheck="false"
+            placeholder="请输入网络地址"
+            v-model={urlInput.value}
+          />
           <span>
             是否启用：
-            <input type="checkbox" class="checkbox" />
+            <input type="checkbox" class="checkbox" v-model={enable.value} />
           </span>
         </div>
         <div class="optionsMain urlListBox">

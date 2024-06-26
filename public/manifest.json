@@ -23,6 +23,7 @@
     "default_icon": "icon/logo_48.png",
     "default_popup": "pages/popup/popup.html"
   },
+  "options_page": "pages/options/options.html",
   "options_ui": {
     "page": "pages/options/options.html",
     "open_in_tab": true

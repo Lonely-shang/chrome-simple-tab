@@ -64,3 +64,17 @@ export const handlerNetWorkUrl = (searchVal: string) => {
   }
   return _copySearchValue.replace(replaceVal, 'http://')
 }
+
+export const getCustomerConf = async () => {
+  try {
+    const { customerWindow } = (await chrome.storage.sync.get(
+      'customerWindow'
+    )) as ChromeStorageData
+    return customerWindow || { urlInputStr: '', isEnable: false }
+  } catch (error) {
+    return {
+      urlInputStr: '',
+      isEnable: false
+    }
+  }
+}

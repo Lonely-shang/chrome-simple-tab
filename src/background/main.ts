@@ -1,10 +1,21 @@
 import { initData } from '@/config'
 ;(async function () {
-  const res = (await chrome.storage.sync.get('urlConfList')) as ChromeStorageData
+  const res = (await chrome.storage.sync.get([
+    'urlConfList',
+    'customerWindow'
+  ])) as ChromeStorageData
   const urlConfList = res.urlConfList || []
   if (urlConfList.length == 0) {
     await chrome.storage.sync.set({
       urlConfList: initData
+    })
+  }
+  if (!res.customerWindow) {
+    await chrome.storage.sync.set({
+      customerWindow: {
+        urlInputStr: '',
+        isEnable: false
+      }
     })
   }
 })()

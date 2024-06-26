@@ -2,6 +2,7 @@ import { computed, defineComponent, ref, Transition } from 'vue'
 import './tab.scss'
 import {
   getBingImg,
+  getCustomerConf,
   handlerNetWorkUrl,
   handlerSearchEngines,
   handlerSearchValueShowPreFix,
@@ -14,6 +15,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     let index: number = 0
+    const iframeUrl = ref<string>('')
     const showIframe = ref<boolean>(false)
     const searchInput = ref<HTMLInputElement>()
     const imgUrl = ref<string>('')
@@ -90,11 +92,19 @@ export default defineComponent({
       showIframe.value = false
     }
 
-    // document.addEventListener('keydown', (e: KeyboardEvent) => {
-    //   if (e.altKey && e.key === 'o') {
-    //     showIframe.value = !showIframe.value
-    //   }
-    // })
+    document.addEventListener('keydown', async (e: KeyboardEvent) => {
+      const customerWindowConf = await getCustomerConf()
+      if (!customerWindowConf.isEnable) {
+        e.preventDefault()
+        return
+      }
+      if (iframeUrl.value != customerWindowConf.urlInputStr) {
+        iframeUrl.value = customerWindowConf.urlInputStr
+      }
+      if (e.altKey && e.key === 'o') {
+        showIframe.value = !showIframe.value
+      }
+    })
 
     return () => (
       <div class="tabMain" style={{ 'background-image': `url(${imgUrl.value})` }}>
@@ -116,7 +126,7 @@ export default defineComponent({
             <div class="tabMain-wrap-icon" onClick={() => handlerShowIframe()}>
               <img src={icon} />
             </div>
-            <iframe class="tabMain-wrap-iframe" src=""></iframe>
+            <iframe class="tabMain-wrap-iframe" src={iframeUrl.value}></iframe>
           </div>
         </Transition>
       </div>

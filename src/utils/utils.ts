@@ -4,11 +4,11 @@ import FetchService from '@/plugins/FetchService'
 import { getBingEnvUrl } from './env'
 
 export const getBingImg = async (): Promise<string> => {
-  return new FetchService()
-    .get(`${getBingEnvUrl()}/HPImageArchive.aspx?format=js&idx=0&n=1`)
-    .then((res: any) => {
+  return FetchService.get(`${getBingEnvUrl()}/HPImageArchive.aspx?format=js&idx=0&n=1`).then(
+    (res: any) => {
       return `https://cn.bing.com/${res.images[0].url}`
-    })
+    }
+  )
 }
 
 const handlerInitData = (arr: NetWorkSearchItem[]): NetWorkSearchObj => {
@@ -22,10 +22,14 @@ const handlerInitData = (arr: NetWorkSearchItem[]): NetWorkSearchObj => {
 export const handlerSearchValueShowPreFix = (
   searchVal: Ref<string>,
   showPreFix: Ref<boolean>,
-  preFixContent: Ref<string>
+  preFixContent: Ref<string>,
+  callBack?: callBackFun
 ) => {
   watch(searchVal, (newVal) => {
-    if (showPreFix.value) return
+    if (showPreFix.value) {
+      callBack?.call(this, newVal)
+      return
+    }
     const regVal = newVal.match(/(\S*) /)
     if (!regVal) return
     const matchVal = regVal[0].trim()

@@ -4,8 +4,8 @@ import { getExteriorForStorage } from './enumUtils'
 const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
 
 export const changeTheme = async () => {
-  const exterior: Exterior = await getExteriorForStorage()
-  setTheme(exterior)
+  // const exterior: Exterior = await getExteriorForStorage()
+  setTheme(0)
 }
 
 export const setModelTheme = (exterior: number) =>

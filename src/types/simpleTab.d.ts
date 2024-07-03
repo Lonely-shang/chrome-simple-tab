@@ -16,3 +16,5 @@ interface ChromeStorageData {
     isEnable: boolean
   }
 }
+
+type callBackFun = (searchVal: string) => void

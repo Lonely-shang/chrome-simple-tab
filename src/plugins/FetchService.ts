@@ -41,4 +41,4 @@ class FetchService {
   }
 }
 
-export default FetchService
+export default new FetchService()

@@ -11,7 +11,6 @@ import {
 import { changeTheme } from '@/utils/theme'
 import icon from '@/assets/icon.svg'
 import { Bounce, gsap } from 'gsap'
-import { time } from 'console'
 
 export default defineComponent({
   name: 'App',
@@ -55,14 +54,14 @@ export default defineComponent({
     //   }
     // )
 
-    // const dateTime = new Date()
-    // const port = chrome.runtime.connect({
-    //   name: `Tab${dateTime.getTime()}`
-    // })
+    const dateTime = new Date()
+    const port = chrome.runtime.connect({
+      name: `Tab${dateTime.getTime()}`
+    })
 
-    // port.onMessage.addListener(() => {
-    //   changeTheme()
-    // })
+    port.onMessage.addListener(() => {
+      changeTheme()
+    })
 
     const handlerKeyDown = (event: KeyboardEvent) => {
       if (event.key == 'Tab') {
@@ -107,19 +106,19 @@ export default defineComponent({
       showIframe.value = false
     }
 
-    // document.addEventListener('keydown', async (e: KeyboardEvent) => {
-    //   const customerWindowConf = await getCustomerConf()
-    //   if (!customerWindowConf.isEnable) {
-    //     e.preventDefault()
-    //     return
-    //   }
-    //   if (iframeUrl.value != customerWindowConf.urlInputStr) {
-    //     iframeUrl.value = customerWindowConf.urlInputStr
-    //   }
-    //   if (e.altKey && e.key === 'o') {
-    //     showIframe.value = !showIframe.value
-    //   }
-    // })
+    document.addEventListener('keydown', async (e: KeyboardEvent) => {
+      const customerWindowConf = await getCustomerConf()
+      if (!customerWindowConf.isEnable) {
+        e.preventDefault()
+        return
+      }
+      if (iframeUrl.value != customerWindowConf.urlInputStr) {
+        iframeUrl.value = customerWindowConf.urlInputStr
+      }
+      if (e.altKey && e.key === 'o') {
+        showIframe.value = !showIframe.value
+      }
+    })
 
     onMounted(() => {
       gsap.set('.search', { y: -100 })
